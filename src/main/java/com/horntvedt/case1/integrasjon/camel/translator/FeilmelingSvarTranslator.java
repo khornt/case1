@@ -16,8 +16,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.horntvedt.case1.integrasjon.dto.svar.feil.LagFeilmeldingSvarDto;
 import com.horntvedt.case1.integrasjon.dto.svar.feil.ValideringsfeilDto;
 
-//import javax.ws.rs.NotFoundException;
-
 public class FeilmelingSvarTranslator implements Processor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FeilmelingSvarTranslator.class);
@@ -102,5 +100,4 @@ public class FeilmelingSvarTranslator implements Processor {
             }
         }
     }
-
 }
