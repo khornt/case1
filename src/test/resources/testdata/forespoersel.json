@@ -1,0 +1,11 @@
+{
+  "hjemmel": "Skatteforvaltningsloven § 10-2 1",
+  "soekekriterier": {
+    "inkluderdisponent" : false,
+    "organisasjonsnummer": "909716212",
+    "periode": {
+      "fraDato": "2016-12-09T08:10:42.128",
+      "tilDato": "2016-12-09T08:10:45.296"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="urn:com:horntvedt:case2:bestill:v1"
+           xmlns:tns="urn:com:horntvedt:case2:bestill:v1"
+           xmlns:felles="urn:com:horntvedt:case2:bestill:akotor:v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import namespace="urn:com:horntvedt:case2:bestill:aktor:v1"
+             schemaLocation="Aktor.xsd"/>
+
+  <xs:element name="Bestilling" type="tns:Bestilling"/>
+
+  <xs:complexType name="Bestilling">
+    <xs:sequence>
+
+      <xs:element name="bestillinginfo" type="felles:Aktor" minOccurs="1" maxOccurs="1"/>
+
+      <!-- enum her -->
+      <xs:element name="forsikringstype" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+      <!-- må bli noe -->
+      <xs:element name="annetfelt" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+
