@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.horntvedt.case1.integrasjon.dto.svar.LagFeilmeldingSvarDto;
-import com.horntvedt.case1.integrasjon.dto.svar.ValideringsfeilDto;
+import com.horntvedt.case1.integrasjon.dto.svar.feil.LagFeilmeldingSvarDto;
+import com.horntvedt.case1.integrasjon.dto.svar.feil.ValideringsfeilDto;
 
 //import javax.ws.rs.NotFoundException;
 

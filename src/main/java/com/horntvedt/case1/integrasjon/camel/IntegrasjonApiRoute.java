@@ -1,5 +1,6 @@
 package com.horntvedt.case1.integrasjon.camel;
 
+import com.horntvedt.case1.integrasjon.camel.translator.ProduktbestillingSvarTranslator;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
@@ -23,12 +24,6 @@ public class IntegrasjonApiRoute extends RouteBuilder {
 
         onException(Exception.class)
             .log(LoggingLevel.ERROR, LOGGER, "Det oppstod en uventet feil: ${exception.stacktrace}")
-            .process(new Processor() {
-                @Override
-                public void process(Exchange exchange) throws Exception {
-
-                }
-            })
             .maximumRedeliveries(0)
             .handled(true)
             .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
@@ -43,25 +38,24 @@ public class IntegrasjonApiRoute extends RouteBuilder {
 
 
         restConfiguration().component("servlet").port("8080")
-            .bindingMode(RestBindingMode.json).skipBindingOnErrorCode(false);  //todo
+            .bindingMode(RestBindingMode.json).skipBindingOnErrorCode(false);
 
         rest("/api/v1/avtale").post()
             .type(ForespoerselDto.class)
             .route().routeId("restPost motta bestilling route")
-            .process(new Processor() {
-                @Override
-                public void process(Exchange exchange) throws Exception {
+            .validate(new ForespoerselValidator())
+            .log(LoggingLevel.INFO, LOGGER, "Melding validert OK")
+            .to("direct:opprettKunde")
+            .to("direct:opprettProdukt")
+            .process(new ProduktbestillingSvarTranslator())
+            .end();
 
-                    ForespoerselDto f = exchange.getIn().getBody(ForespoerselDto.class);
-
-                }
-            })
-            .validate(new ForespoerselValidator());
 
 
 
         from("direct:opprettKunde")
             .log(LoggingLevel.INFO, LOGGER, "Oppretter kunde i fagsystem");
+
 
 
 

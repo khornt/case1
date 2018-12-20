@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
-public class TestBase {
+public abstract class TestBase {
 
     @ClassRule
     public final static EnvironmentVariables environmentVariables = new EnvironmentVariables();
@@ -28,7 +29,5 @@ public class TestBase {
         File responseMessage = new ClassPathResource(fileName).getFile();
         return FileUtils.readFileToString(responseMessage, "utf-8");
     }
-
-
 
 }

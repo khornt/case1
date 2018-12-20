@@ -1,4 +1,4 @@
-package com.horntvedt.case1.integrasjon.dto.svar;
+package com.horntvedt.case1.integrasjon.dto.svar.feil;
 
 import java.util.List;
 

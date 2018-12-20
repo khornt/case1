@@ -39,6 +39,7 @@ public class ForespoerselValidator implements Predicate {
     private void validerForespoersel(String fnr, String orgnr, Map<String, String> errorMap) {
 
         if (!sjekkBlankOgNull(fnr)) {
+
             if (!fnr.matches(FOEDSELSNUMMER_FORMAT)) {
                 errorMap.put("formatfeil", "foedselsnummer format ugyldig");
                 LOGGER.warn("Fødselsnummeret er i feil format");
@@ -48,18 +49,15 @@ public class ForespoerselValidator implements Predicate {
                 errorMap.put("formatfeil", "orgnisasjonsnummer format ugyldig");
                 LOGGER.warn("Organisasjonsnummeret er i feil format");
             }
-        } else {
-            errorMap.put("identifikator", "mangler noedvending felt");
-            LOGGER.warn("forespoersel mangler identifikator");
         }
     }
 
     private boolean sjekkBlankOgNull(String value) {
 
         if ((value != null) && (!"".equals(value))) {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 }
