@@ -18,7 +18,6 @@ public class RegistrerKundeForespoerselTranslator implements Processor  {
         KundeForespoersel kundeForespoersel = lagKundeforespoersel(exchange);
 
         exchange.setProperty("origianForespoersel", exchange.getIn().getBody(ForespoerselDto.class));
-
         exchange.getOut().setBody(kundeForespoersel);
         //exchange.getOut().setHeader(Header.HEADER_LIST, "soapHeadere");
         exchange.getOut().setHeader(CxfConstants.OPERATION_NAME, "registrerKunde");

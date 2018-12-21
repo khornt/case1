@@ -18,9 +18,6 @@ public class ProduktbestillingSvarTranslator implements Processor {
         svar.setOrdrenummer("123456789");
         svar.setStatus("Ok");
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        //json ti string bør være unødvendig, bør fungere direkte
-        exchange.getIn().setBody(mapper.writeValueAsString(svar));
+        exchange.getOut().setBody(svar);
     }
 }

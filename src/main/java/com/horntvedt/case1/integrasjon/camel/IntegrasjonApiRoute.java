@@ -18,6 +18,7 @@ import com.horntvedt.case1.integrasjon.camel.translator.FeilmelingSvarTranslator
 import com.horntvedt.case1.integrasjon.camel.translator.RegistrerKundeForespoerselTranslator;
 import com.horntvedt.case1.integrasjon.camel.validator.ForespoerselValidator;
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
+import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
 
 @Component
 public class IntegrasjonApiRoute extends RouteBuilder {
@@ -67,6 +68,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
 
         rest("/api/v1/avtale").post()
             .type(ForespoerselDto.class)
+            .outType(ResponsDto.class)
             .route().routeId("restPost motta bestilling route")
             .validate(new ForespoerselValidator())
             .log(LoggingLevel.INFO, LOGGER, "Melding validert OK")
