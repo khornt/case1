@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="urn:com:horntvedt:case2:fagsystem:produkt:v1"
+           xmlns:tns="urn:com:horntvedt:case2:fagsystem:produkt:v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+  <xs:element name="produktForespoersel" type="tns:ProduktForespoersel"/>
+  <xs:element name="produktRespons" type="tns:ProduktRespons"/>
+
+  <xs:complexType name="ProduktRespons">
+    <xs:sequence>
+      <xs:element name="svar" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProduktForespoersel">
+    <xs:sequence>
+      <!-- enum -->
+      <xs:element name="produkt" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="beskrivelse" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="betingelser" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+

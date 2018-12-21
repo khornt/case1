@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="urn:com:horntvedt:case2:fagsystem:kunde:v1"
+           xmlns:tns="urn:com:horntvedt:case2:fagsystem:kunde:v1"
+           xmlns:felles="urn:com:horntvedt:case2:fagsystem:aktor:v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import namespace="urn:com:horntvedt:case2:fagsystem:aktor:v1"
+             schemaLocation="Aktor.xsd"/>
+
+  <xs:element name="kundeForespoersel" type="tns:KundeForespoersel"/>
+  <xs:element name="kundeRespons" type="tns:KundeRespons"/>
+
+  <xs:complexType name="KundeRespons">
+    <xs:sequence>
+      <xs:element name="svar" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KundeForespoersel">
+    <xs:sequence>
+      <xs:element name="kundeInfo" type="felles:Aktor" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="annetfelt" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+

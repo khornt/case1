@@ -5,18 +5,43 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.processor.validation.PredicateValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.horntvedt.case1.integrasjon.camel.translator.FeilmelingSvarTranslator;
+import com.horntvedt.case1.integrasjon.camel.translator.RegistrerKundeForespoerselTranslator;
 import com.horntvedt.case1.integrasjon.camel.validator.ForespoerselValidator;
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
 
 @Component
 public class IntegrasjonApiRoute extends RouteBuilder {
+
+
+    @Value("${kunde.url}")
+    private String kundeUrl;
+
+    @Value("${kunde.port}")
+    private String kundePort;
+
+
+    private String kundeEndepunkt() {
+
+        return "cxf:/fagsystem?"
+            + "address=" + kundeUrl + ":" + kundePort + "/soap-api/fagsystem/v1/fagsystem"
+            + "&serviceClass=com.horntvedt.case2.fagsystem.v1.Fagsystem"
+            + "&serviceName={urn:com:horntvedt:case2:fagsystem:v1}fagsystem"
+            + "&skipFaultLogging=false"
+            + "&loggingFeatureEnabled=true"
+            + "&allowStreaming=false";
+
+    }
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IntegrasjonApiRoute.class);
 
@@ -48,15 +73,16 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .to("direct:opprettKunde")
             .to("direct:opprettProdukt")
             .process(new ProduktbestillingSvarTranslator())
+
             .end();
 
 
-
-
         from("direct:opprettKunde")
-            .log(LoggingLevel.INFO, LOGGER, "Oppretter kunde i fagsystem");
-
-
+            .log(LoggingLevel.INFO, LOGGER, "Oppretter kunde i fagsystem")
+            .process(new RegistrerKundeForespoerselTranslator())
+            .to(kundeEndepunkt()).routeId("Soap kall mot kunderegister")
+            //trekk ut respons og legg på poperty her...
+            .log(LoggingLevel.INFO, LOGGER, "Kunde opprettet i fagsystem");
 
 
         from("direct:opprettProdukt")

@@ -20,7 +20,7 @@ public class ResponsDto {
 
 
     @JsonProperty("ordrenummer")
-    public String getFoedselsnummer() {
+    public String getOrdrenummer() {
         return ordrenummer;
     }
 

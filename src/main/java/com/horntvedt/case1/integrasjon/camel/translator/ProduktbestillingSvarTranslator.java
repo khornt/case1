@@ -1,9 +1,12 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProduktbestillingSvarTranslator implements Processor {
 
 
@@ -15,7 +18,9 @@ public class ProduktbestillingSvarTranslator implements Processor {
         svar.setOrdrenummer("123456789");
         svar.setStatus("Ok");
 
-        exchange.getIn().setBody(svar);
-    }
+        ObjectMapper mapper = new ObjectMapper();
 
+        //json ti string bør være unødvendig, bør fungere direkte
+        exchange.getIn().setBody(mapper.writeValueAsString(svar));
+    }
 }

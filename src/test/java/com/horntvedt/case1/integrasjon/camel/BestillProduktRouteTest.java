@@ -1,5 +1,6 @@
 package com.horntvedt.case1.integrasjon.camel;
 
+import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import com.horntvedt.case1.integrasjon.TestBase;
 import org.apache.http.HttpHeaders;
@@ -15,7 +16,8 @@ import static net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER;
 public class BestillProduktRouteTest extends TestBase {
 
     @ClassRule
-    public static WireMockClassRule wireMockClassRule = new WireMockClassRule(wireMockConfig());
+    public static WireMockClassRule wireMockClassRule = new WireMockClassRule(wireMockConfig()
+        .notifier(new Slf4jNotifier(true)));
     private String url;
 
     @Before
@@ -37,6 +39,7 @@ public class BestillProduktRouteTest extends TestBase {
                 .post(url)
                 .then()
                 .statusCode(200)
+                .log().all()
                 .assertThat().body(jsonEquals(bodyRespons).when(IGNORING_ARRAY_ORDER));
 
     }
@@ -55,6 +58,7 @@ public class BestillProduktRouteTest extends TestBase {
          .post(url)
          .then()
          .statusCode(400)
+            .log().all()
          .assertThat().body(jsonEquals(bodyRespons).when(IGNORING_ARRAY_ORDER));
 
     }

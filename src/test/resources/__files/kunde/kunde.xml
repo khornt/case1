@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns2:kundeRespons xmlns:ns2="urn:com:horntvedt:case2:fagsystem:kunde:v1">
+      <svar>Ok</svar>
+    </ns2:kundeRespons>
+  </soap:Body>
+</soap:Envelope>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="urn:com:horntvedt:case2:fagsystem:v1"
+             name="Fagsystem" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:com:horntvedt:case2:fagsystem:v1"
+             xmlns:knd="urn:com:horntvedt:case2:fagsystem:kunde:v1"
+             xmlns:prd="urn:com:horntvedt:case2:fagsystem:produkt:v1"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+
+    <xsd:schema>
+      <xsd:import namespace="urn:com:horntvedt:case2:fagsystem:kunde:v1"
+                  schemaLocation="../xsd/Kunde.xsd"/>
+    </xsd:schema>
+
+    <xsd:schema>
+      <xsd:import namespace="urn:com:horntvedt:case2:fagsystem:produkt:v1"
+                  schemaLocation="../xsd/Produkt.xsd"/>
+    </xsd:schema>
+
+  </types>
+
+  <message name="registrerKundeForespoersel">
+    <part name="registrerKundeForespoersel" element="knd:kundeForespoersel"/>
+  </message>
+
+  <message name="registrerKundeRespons">
+    <part name="registerKundeRespons" element="knd:kundeRespons"/>
+  </message>
+
+  <message name="registrerProduktForespoersel">
+    <part name="registrerProduktForespoersel" element="prd:produktForespoersel"/>
+  </message>
+
+  <message name="registerProduktRespons">
+    <part name="registerProduktRespons" element="prd:produktRespons"/>
+  </message>
+
+  <portType name="fagsystem">
+    <operation name="registrerKunde">
+      <input message="tns:registrerKundeForespoersel"/>
+      <output message="tns:registrerKundeRespons"/>
+    </operation>
+    <operation name="registrerProdukt">
+      <input message="tns:registrerProduktForespoersel"/>
+      <output message="tns:registerProduktRespons"/>
+    </operation>
+  </portType>
+
+  <binding name="fagsystemSoapBinding" type="tns:fagsystem">
+
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+
+    <operation name="registrerKunde">
+      <soap:operation
+        soapAction="urn:com:horntvedt:case2:fagsystem:kunde:v1/registrerKunde"/>
+      <input>
+        <soap:body use="literal" parts="registrerKundeForespoersel"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="registerKundeRespons"/>
+      </output>
+      <!--<fault name="fault">-->
+        <!--<soap:fault name="fault" use="literal"/>-->
+      <!--</fault>-->
+    </operation>
+
+    <operation name="registrerProdukt">
+      <soap:operation
+        soapAction="urn:com:horntvedt:case2:fagsystem:produkt:v1/registrerProdukt"/>
+      <input>
+        <soap:body use="literal" parts="registrerProduktForespoersel"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="registerProduktRespons"/>
+      </output>
+      <!--<fault name="fault">-->
+        <!--<soap:fault name="fault" use="literal"/>-->
+      <!--</fault>-->
+    </operation>
+  </binding>
+
+  <service name="fagsystem">
+    <port name="fagsystemSoap" binding="tns:fagsystemSoapBinding">
+      <soap:address location="http://localhost:8080/jabbajabba/v1"/>
+    </port>
+  </service>
+</definitions>
+
