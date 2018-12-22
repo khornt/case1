@@ -10,6 +10,14 @@
         <xs:element name="foedselsnummer" type="tns:Foedselsnummer" />
         <xs:element name="organisasjonsnummer" type="tns:Organisasjonsnummer" />
       </xs:choice>
+
+      <xs:element name="fornavn" type="xs:string"   />
+      <xs:element name="mellomnavn" type="xs:string" minOccurs="0" />
+      <xs:element name="etternavn" type="xs:string" />
+      <xs:element name="adresselinje1" type="xs:string" />
+      <xs:element name="adresselinje2" type="xs:string" />
+      <xs:element name="postnummer" type="xs:string" />
+      <xs:element name="poststed" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
 

@@ -4,16 +4,16 @@
     "method" : "POST",
     "headers" : {
       "SOAPAction" : {
-        "matches" : ".*registrerKunde.*"
-      }
+          "matches" : ".*registrerProdukt.*"
+                 }
     }
   },
   "response" : {
     "status" : 200,
     "headers" : {
-      "Content-Length" : "216",
+      "Content-Length" : "272",
       "Content-Type ": "text/xml;charset=UTF-8"
     },
-    "bodyFileName" : "fagsystem/kunde.xml"
+    "bodyFileName" : "fagsystem/produkt.xml"
   }
 }

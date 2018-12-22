@@ -11,14 +11,13 @@
 
   <groupId>com.horntvedt.case1</groupId>
   <artifactId>integrasjon</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.9</version>
   <name>integrasjon-application</name>
   <description>project-description</description>
   <packaging>jar</packaging>
 
 
   <properties>
-    <commons.dbcp2.version>2.1.1</commons.dbcp2.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.scm.plugin.version>1.9.5</maven.scm.plugin.version>
@@ -27,7 +26,7 @@
     <awaitility.version>3.0.0</awaitility.version>
     <json-unit.version>1.25.0</json-unit.version>
     <rest-assured.version>3.0.3</rest-assured.version>
-    <springframework-boot.version>1.5.3.RELEASE</springframework-boot.version>
+    <springframework-boot.version>2.0.5.RELEASE</springframework-boot.version>
     <system-rules.version>1.18.0</system-rules.version>
     <wiremock.version>2.5.1</wiremock.version>
     <junit.version>4.12</junit.version>
@@ -101,17 +100,6 @@
       <version>${springframework-boot.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jdbc</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-sql</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -142,32 +130,6 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-xstream</artifactId>
       <version>${camel.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-dbcp2</artifactId>
-      <version>${commons.dbcp2.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jdbc</artifactId>
-      <version>${springframework-boot.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-jdbc</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.6</version>
     </dependency>
 
     <!--Test dependencies -->

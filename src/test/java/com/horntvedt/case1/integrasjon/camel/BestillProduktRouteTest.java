@@ -17,7 +17,7 @@ public class BestillProduktRouteTest extends TestBase {
 
     @ClassRule
     public static WireMockClassRule wireMockClassRule = new WireMockClassRule(wireMockConfig()
-        .notifier(new Slf4jNotifier(true)));
+            .notifier(new Slf4jNotifier(true)));
     private String url;
 
     @Before
@@ -51,15 +51,15 @@ public class BestillProduktRouteTest extends TestBase {
         String bodyRespons = getMessage("testdata/valideringsfeilRespons.json");
 
         given()
-         .header(HttpHeaders.CONTENT_TYPE, "application/json")
-         .header(HttpHeaders.ACCEPT, "application/json")
-         .body(bodyForespoersel)
-         .when()
-         .post(url)
-         .then()
-         .statusCode(400)
-            .log().all()
-         .assertThat().body(jsonEquals(bodyRespons).when(IGNORING_ARRAY_ORDER));
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .header(HttpHeaders.ACCEPT, "application/json")
+                .body(bodyForespoersel)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(400)
+                .log().all()
+                .assertThat().body(jsonEquals(bodyRespons).when(IGNORING_ARRAY_ORDER));
 
     }
 }

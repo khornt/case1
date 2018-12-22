@@ -9,14 +9,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProduktbestillingSvarTranslator implements Processor {
 
+    private  static final String KUNDEID = "kundeId";
+    private  static final String AVTALENUMMER = "avtaleNummer";
+
 
     @Override
     public void process(Exchange exchange) throws Exception {
 
         ResponsDto svar = new ResponsDto();
 
-        svar.setOrdrenummer("123456789");
         svar.setStatus("Ok");
+        svar.setKundeNummer(exchange.getProperty(KUNDEID, String.class));
+        svar.setAvtaleNummer(exchange.getProperty(AVTALENUMMER, String.class));
 
         exchange.getOut().setBody(svar);
     }

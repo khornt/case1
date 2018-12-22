@@ -8,7 +8,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "foedselsnummer",
     "organisasjonsnummer",
-    "navn" })
+    "fornavn",
+    "mellomnavn",
+    "etternavn",
+    "adresse",
+    "produkt"
+
+
+})
 
 public class ForespoerselDto {
 
@@ -20,7 +27,19 @@ public class ForespoerselDto {
     private String organisasjonsnummer;
 
     @JsonProperty
-    private String navn;
+    private String fornavn;
+
+    @JsonProperty
+    private String mellomnavn;
+
+    @JsonProperty
+    private String etternavn;
+
+    @JsonProperty
+    private AdresseDto adresse;
+
+    @JsonProperty
+    private ProduktDto produkt;
 
     @JsonProperty("foedselsnummer")
     public String getFoedselsnummer() {
@@ -32,7 +51,6 @@ public class ForespoerselDto {
         this.foedselsnummer = foedselsnummer;
     }
 
-
     @JsonProperty("organisasjonsnummer")
     public String getOrganisasjonsnummer() {
         return organisasjonsnummer;
@@ -43,13 +61,56 @@ public class ForespoerselDto {
         this.organisasjonsnummer = organisasjonsnummer;
     }
 
-    @JsonProperty("navn")
-    public String getNavn() {
-        return navn;
+
+    @JsonProperty("fornavn")
+    public String getFornavn() {
+        return fornavn;
     }
 
-    @JsonProperty("navn")
-    public void setNavn(String navn) {
-        this.navn = navn;
+    @JsonProperty("fornavn")
+    public void setFornavn(String navn) {
+        this.fornavn = navn;
     }
+
+    @JsonProperty("mellomnavn")
+    public String getMellomnavn() {
+        return mellomnavn;
+    }
+
+    @JsonProperty("mellomnavn")
+    public void setMellomnavn(String navn) {
+        this.mellomnavn = navn;
+    }
+
+    @JsonProperty("etternavn")
+    public String getEtternavn() {
+        return etternavn;
+    }
+
+    @JsonProperty("etternavn")
+    public void setEtternavn(String navn) {
+        this.etternavn = navn;
+    }
+
+    @JsonProperty("adresse")
+    public AdresseDto getAdresse() {
+        return adresse;
+    }
+
+    @JsonProperty("adresse")
+    public void setAdresse(AdresseDto adresse) {
+        this.adresse = adresse;
+    }
+
+
+    @JsonProperty("produkt")
+    public ProduktDto getProdukt() {
+        return produkt;
+    }
+
+    @JsonProperty("produkt")
+    public void setProdukt(ProduktDto produkt) {
+        this.produkt = produkt;
+    }
+
 }

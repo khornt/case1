@@ -1,5 +1,6 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,15 @@ public class FeilmelingSvarTranslator implements Processor {
             LagFeilmeldingSvarDto feil;
             feil = translateTilValideringsFeilmelding(exchange);
             exchange.getIn().setBody(feil);
-        }  else {
+        }
+        if (caused instanceof org.apache.cxf.interceptor.Fault) {
+
+            String feilmelding = "Kunne ikke kontakte bakenforliggende system, prøv igjen senere";
+            byggFeilmelding(exchange, feilmelding, "5001");
+
+        }
+
+        else {
 
             LOGGER.error("Feil i feilhåndtering: Feilet i å sette feilmelding");
         }

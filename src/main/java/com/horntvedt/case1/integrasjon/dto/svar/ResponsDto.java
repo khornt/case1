@@ -6,28 +6,22 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "ordrenummer",
-    "status" })
+
+    "status",
+    "kundeNummer",
+    "avtaleNummer"
+})
 
 public class ResponsDto {
-
-
-    @JsonProperty
-    private String ordrenummer;
 
     @JsonProperty
     private String status;
 
+    @JsonProperty
+    private String kundeNummer;
 
-    @JsonProperty("ordrenummer")
-    public String getOrdrenummer() {
-        return ordrenummer;
-    }
-
-    @JsonProperty("ordrenummer")
-    public void setOrdrenummer(String ordrenummer) {
-        this.ordrenummer = ordrenummer;
-    }
+    @JsonProperty
+    private String avtaleNummer;
 
 
     @JsonProperty("status")
@@ -39,5 +33,27 @@ public class ResponsDto {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
+
+    @JsonProperty("kundeNummer")
+    public String getKundeNummer() {
+        return kundeNummer;
+    }
+
+    @JsonProperty("kundeNummer")
+    public void setKundeNummer(String kundeNummer) {
+        this.kundeNummer = kundeNummer;
+    }
+
+
+    @JsonProperty("avtaleNummer")
+    public String getAvtaleNummer() {
+        return avtaleNummer;
+    }
+
+    @JsonProperty("avtaleNummer")
+    public void setAvtaleNummer(String avtaleNummer) {
+        this.avtaleNummer = avtaleNummer;
+    }
+
 }

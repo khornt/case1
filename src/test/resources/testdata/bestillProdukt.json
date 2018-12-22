@@ -1,4 +1,16 @@
 {
-"foedselsnummer":"01019933544",
-"navn":"Kristian Horntvedt"
+  "foedselsnummer": "01019933544",
+  "fornavn": "Kristian",
+  "mellomnavn": "Guru",
+  "etternavn": "Horntvedt",
+  "adresse": {
+    "adresselinje1": "Gateveien 123",
+    "adresselinje2": "Gateveien 123b",
+    "postnummer": "1234",
+    "poststed": "Oslo"
+  },
+  "produkt" : {
+    "produktId" : "1001",
+    "bonus" : "50%"
+  }
 }

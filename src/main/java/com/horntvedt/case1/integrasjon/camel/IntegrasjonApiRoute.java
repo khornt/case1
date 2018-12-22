@@ -1,21 +1,18 @@
 package com.horntvedt.case1.integrasjon.camel;
 
-import com.horntvedt.case1.integrasjon.camel.translator.ProduktbestillingSvarTranslator;
+import com.horntvedt.case1.integrasjon.camel.translator.*;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.processor.validation.PredicateValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.horntvedt.case1.integrasjon.camel.translator.FeilmelingSvarTranslator;
-import com.horntvedt.case1.integrasjon.camel.translator.RegistrerKundeForespoerselTranslator;
 import com.horntvedt.case1.integrasjon.camel.validator.ForespoerselValidator;
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
 import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
@@ -24,17 +21,17 @@ import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
 public class IntegrasjonApiRoute extends RouteBuilder {
 
 
-    @Value("${kunde.url}")
-    private String kundeUrl;
+    @Value("${fag.url}")
+    private String fagUrl;
 
-    @Value("${kunde.port}")
-    private String kundePort;
+    @Value("${fag.port}")
+    private String fagPort;
 
 
-    private String kundeEndepunkt() {
+    private String fagsystemEndepunkt() {
 
         return "cxf:/fagsystem?"
-            + "address=" + kundeUrl + ":" + kundePort + "/soap-api/fagsystem/v1/fagsystem"
+            + "address=" + fagUrl + ":" + fagPort + "/soap-api/fagsystem/v1/fagsystem"
             + "&serviceClass=com.horntvedt.case2.fagsystem.v1.Fagsystem"
             + "&serviceName={urn:com:horntvedt:case2:fagsystem:v1}fagsystem"
             + "&skipFaultLogging=false"
@@ -53,7 +50,8 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .maximumRedeliveries(0)
             .handled(true)
             .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
-            .setBody(constant(null));
+            .process(new FeilmelingSvarTranslator());
+            //.setBody(constant("{\"feil\":\"Dette gikk skeis\"}"));
 
         onException(PredicateValidationException.class)
             .log(LoggingLevel.INFO, LOGGER, "Route feilet i predicate sjekk: ${exception.stacktrace}")
@@ -63,16 +61,20 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .process(new FeilmelingSvarTranslator());
 
 
+
+
         restConfiguration().component("servlet").port("8080")
             .bindingMode(RestBindingMode.json).skipBindingOnErrorCode(false);
 
         rest("/api/v1/avtale").post()
             .type(ForespoerselDto.class)
-            .outType(ResponsDto.class)
+            .outType(ResponsDto.class)  //todo: nødvendig??
             .route().routeId("restPost motta bestilling route")
             .validate(new ForespoerselValidator())
+            .process(new BestillingMottakTranslator())
             .log(LoggingLevel.INFO, LOGGER, "Melding validert OK")
             .to("direct:opprettKunde")
+            .removeHeaders("*")
             .to("direct:opprettProdukt")
             .process(new ProduktbestillingSvarTranslator())
 
@@ -82,14 +84,16 @@ public class IntegrasjonApiRoute extends RouteBuilder {
         from("direct:opprettKunde")
             .log(LoggingLevel.INFO, LOGGER, "Oppretter kunde i fagsystem")
             .process(new RegistrerKundeForespoerselTranslator())
-            .to(kundeEndepunkt()).routeId("Soap kall mot kunderegister")
-            //trekk ut respons og legg på poperty her...
-            .log(LoggingLevel.INFO, LOGGER, "Kunde opprettet i fagsystem");
+            .to(fagsystemEndepunkt()).routeId("Soap kall mot fagsystem: registrerKunde")
+            .process(new RegisterKundeResponsTranslator())
+            .log(LoggingLevel.INFO, LOGGER, "Utført soap kall mot fagsystem, operation: : registrerKunde");
 
 
         from("direct:opprettProdukt")
-            .log(LoggingLevel.INFO, LOGGER, "Oppretter produkt i fagsystem");
-
+            .log(LoggingLevel.INFO, LOGGER, "Oppretter produkt i fagsystem: registrerProdukt")
+            .process(new RegisterProduktForespoerselTranslator())
+            .to(fagsystemEndepunkt()).routeId("Soap kall mot fagsystem: registrerProdukt")
+            .process(new RegistrerProduktResponsTranslator())
+            .log(LoggingLevel.INFO, LOGGER, "Utført soap kall mot fagsystem, operation: registerProdukt");
     }
-
 }

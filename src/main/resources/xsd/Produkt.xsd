@@ -9,14 +9,16 @@
 
   <xs:complexType name="ProduktRespons">
     <xs:sequence>
-      <xs:element name="svar" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <!-- mulig å bestille flere produkter initielt?? -->
+      <xs:element name="avtalenummer" type="xs:string" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="ProduktForespoersel">
     <xs:sequence>
       <!-- enum -->
-      <xs:element name="produkt" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="produktId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="kundeId" type="xs:string"  minOccurs="1" maxOccurs="1"/>
       <xs:element name="beskrivelse" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="betingelser" type="xs:string" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
