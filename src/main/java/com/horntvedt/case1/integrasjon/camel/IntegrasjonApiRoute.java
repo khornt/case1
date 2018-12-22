@@ -8,8 +8,10 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.processor.validation.PredicateValidationException;
+import org.apache.camel.spring.spi.TransactionErrorHandlerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +29,8 @@ public class IntegrasjonApiRoute extends RouteBuilder {
     @Value("${fag.port}")
     private String fagPort;
 
+    @Value("${amq.utpostkasse}")
+    private String utpostkasse;
 
     private String fagsystemEndepunkt() {
 
@@ -44,6 +48,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(IntegrasjonApiRoute.class);
 
     public void configure() {
+
 
         onException(Exception.class)
             .log(LoggingLevel.ERROR, LOGGER, "Det oppstod en uventet feil: ${exception.stacktrace}")
@@ -76,6 +81,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .to("direct:opprettKunde")
             .removeHeaders("*")
             .to("direct:opprettProdukt")
+             .to("direct:sendBrevTilKoe")
             .process(new ProduktbestillingSvarTranslator())
 
             .end();
@@ -95,5 +101,14 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .to(fagsystemEndepunkt()).routeId("Soap kall mot fagsystem: registrerProdukt")
             .process(new RegistrerProduktResponsTranslator())
             .log(LoggingLevel.INFO, LOGGER, "Utført soap kall mot fagsystem, operation: registerProdukt");
+
+
+        from("direct:sendBrevTilKoe").routeId("Send brev til brevkø")
+                .log(LoggingLevel.INFO, LOGGER, "Sender ut brev")
+                .setExchangePattern(ExchangePattern.InOnly)
+                .process(new ProduserBrevTranslator())
+                .to("activemq:queue:" + utpostkasse + "?jmsMessageType=Text");  //lettere å se hva som går galt
+
+
     }
 }
