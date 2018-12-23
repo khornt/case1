@@ -1,23 +1,19 @@
 package com.horntvedt.case1.integrasjon.camel;
 
 import com.horntvedt.case1.integrasjon.camel.translator.*;
-import org.apache.camel.Exchange;
-import org.apache.camel.ExchangePattern;
-import org.apache.camel.LoggingLevel;
-import org.apache.camel.Processor;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
-import org.apache.camel.processor.validation.PredicateValidationException;
-import org.apache.camel.spring.spi.TransactionErrorHandlerBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import com.horntvedt.case1.integrasjon.camel.validator.ForespoerselValidator;
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
 import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
+import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.rest.RestBindingMode;
+import org.apache.camel.processor.validation.PredicateValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class IntegrasjonApiRoute extends RouteBuilder {
@@ -67,9 +63,9 @@ public class IntegrasjonApiRoute extends RouteBuilder {
 
 
 
-
         restConfiguration().component("servlet").port("8080")
             .bindingMode(RestBindingMode.json).skipBindingOnErrorCode(false);
+
 
         rest("/api/v1/avtale").post()
             .type(ForespoerselDto.class)
@@ -107,7 +103,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
                 .log(LoggingLevel.INFO, LOGGER, "Sender ut brev")
                 .setExchangePattern(ExchangePattern.InOnly)
                 .process(new ProduserBrevTranslator())
-                .to("activemq:queue:" + utpostkasse + "?jmsMessageType=Text");  //lettere å se hva som går galt
+                .to("activemq:queue:" + utpostkasse + "?jmsMessageType=Text");
 
 
     }

@@ -1,7 +1,6 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
-import com.horntvedt.case2.fagsystem.kunde.v1.KundeForespoersel;
 import com.horntvedt.case2.fagsystem.produkt.v1.ProduktForespoersel;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;

@@ -3,15 +3,9 @@ package com.horntvedt.case1.integrasjon.camel.translator;
 import com.horntvedt.case1.integrasjon.dto.forespoersel.ForespoerselDto;
 import com.horntvedt.case2.fagsystem.aktor.v1.Aktor;
 import com.horntvedt.case2.fagsystem.kunde.v1.KundeForespoersel;
-import com.horntvedt.case2.fagsystem.kunde.v1.ObjectFactory;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.cxf.common.message.CxfConstants;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
 
 public class RegistrerKundeForespoerselTranslator implements Processor {
 
@@ -23,7 +17,6 @@ public class RegistrerKundeForespoerselTranslator implements Processor {
 
         exchange.setProperty("origianForespoersel", exchange.getIn().getBody(ForespoerselDto.class));
         exchange.getOut().setBody(kundeForespoersel);
-        //exchange.getOut().setHeader(Header.HEADER_LIST, "soapHeadere");
         exchange.getOut().setHeader(CxfConstants.OPERATION_NAME, "registrerKunde");
     }
 
@@ -44,7 +37,6 @@ public class RegistrerKundeForespoerselTranslator implements Processor {
 
         settNavn(aktor, forespoersel);
         settAdresse(aktor, forespoersel);
-
         kundeForespoersel.setKundeInfo(aktor);
 
         return kundeForespoersel;
@@ -75,7 +67,6 @@ public class RegistrerKundeForespoerselTranslator implements Processor {
         if ((value != null) && (!"".equals(value))) {
             return false;
         }
-
         return true;
     }
 }

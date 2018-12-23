@@ -1,6 +1,5 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.horntvedt.case1.integrasjon.dto.svar.ResponsDto;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -11,7 +10,6 @@ public class ProduktbestillingSvarTranslator implements Processor {
 
     private  static final String KUNDEID = "kundeId";
     private  static final String AVTALENUMMER = "avtaleNummer";
-
 
     @Override
     public void process(Exchange exchange) throws Exception {

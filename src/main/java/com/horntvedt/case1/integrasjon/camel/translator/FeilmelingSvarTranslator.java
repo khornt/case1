@@ -1,21 +1,19 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
-import java.io.IOException;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.horntvedt.case1.integrasjon.dto.svar.feil.LagFeilmeldingSvarDto;
+import com.horntvedt.case1.integrasjon.dto.svar.feil.ValideringsfeilDto;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.processor.validation.PredicateValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.horntvedt.case1.integrasjon.dto.svar.feil.LagFeilmeldingSvarDto;
-import com.horntvedt.case1.integrasjon.dto.svar.feil.ValideringsfeilDto;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class FeilmelingSvarTranslator implements Processor {
 
@@ -41,9 +39,7 @@ public class FeilmelingSvarTranslator implements Processor {
 
             String feilmelding = "Kunne ikke kontakte bakenforliggende system, prøv igjen senere";
             byggFeilmelding(exchange, feilmelding, "5001");
-
         }
-
         else {
 
             LOGGER.error("Feil i feilhåndtering: Feilet i å sette feilmelding");

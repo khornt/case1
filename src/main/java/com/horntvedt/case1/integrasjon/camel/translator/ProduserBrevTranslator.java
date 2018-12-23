@@ -16,7 +16,7 @@ public class ProduserBrevTranslator implements Processor {
 
         ForespoerselDto forespoersel = exchange.getProperty(ORIGINAL_MSG, ForespoerselDto.class);
 
-
+        //todo: må selfølgeig over til xml eller json.
         String brev = "Hei " + forespoersel.getFornavn() + ". Velkommen til oss \n\n " +
                 "Ditt kundenummer er: "  + exchange.getProperty(KUNDEID, String.class);
 

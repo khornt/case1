@@ -1,6 +1,5 @@
 package com.horntvedt.case1.integrasjon.camel.translator;
 
-import com.horntvedt.case2.fagsystem.kunde.v1.KundeRespons;
 import com.horntvedt.case2.fagsystem.produkt.v1.ProduktRespons;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
