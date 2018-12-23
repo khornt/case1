@@ -44,7 +44,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
 
     }
 
-
+    private static final String ORIGINAL_MSG = "orginalMelding";
     private static final Logger LOGGER = LoggerFactory.getLogger(IntegrasjonApiRoute.class);
 
     public void configure() {
@@ -76,7 +76,7 @@ public class IntegrasjonApiRoute extends RouteBuilder {
             .outType(ResponsDto.class)  //todo: nødvendig??
             .route().routeId("restPost motta bestilling route")
             .validate(new ForespoerselValidator())
-            .process(new BestillingMottakTranslator())
+            .setProperty(ORIGINAL_MSG, simple("in.body"))
             .log(LoggingLevel.INFO, LOGGER, "Melding validert OK")
             .to("direct:opprettKunde")
             .removeHeaders("*")
