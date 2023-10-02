@@ -22,7 +22,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.scm.plugin.version>1.9.5</maven.scm.plugin.version>
     <junit.version>4.12</junit.version>
-    <camel.version>2.22.0</camel.version>
+    <camel.version>3.0.0</camel.version>
     <awaitility.version>3.0.0</awaitility.version>
     <json-unit.version>1.25.0</json-unit.version>
     <rest-assured.version>3.0.3</rest-assured.version>
@@ -160,7 +160,7 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-contract-wiremock</artifactId>
-      <version>2.0.0.RELEASE</version>
+      <version>4.0.0</version>
     </dependency>
 
     <dependency>
